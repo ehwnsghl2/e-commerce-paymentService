@@ -1,0 +1,13 @@
+server:
+  port: 9004
+  shutdown: graceful
+
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: payment-service
+  profiles:
+    active: local
+
