@@ -19,5 +19,4 @@ class PaymentSaveDTO(
     fun toEntity(): Payment =
         Payment(orderCode, type, method, amount)
 
-
 }

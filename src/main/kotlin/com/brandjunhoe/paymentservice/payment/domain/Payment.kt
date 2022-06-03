@@ -1,5 +1,6 @@
 package com.brandjunhoe.paymentservice.payment.domain
 
+import com.brandjunhoe.paymentservice.common.domain.DateColumnEntity
 import com.brandjunhoe.paymentservice.common.domain.DateDeleteColumnEntity
 import com.brandjunhoe.paymentservice.payment.domain.enum.PaymentMethodEnum
 import com.brandjunhoe.paymentservice.payment.domain.enum.PaymentStateEnum
@@ -25,9 +26,7 @@ class Payment(
     @Column(name = "method", columnDefinition = "enum", nullable = false)
     val method: PaymentMethodEnum,
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "state", columnDefinition = "enum", nullable = false)
-    val state: PaymentStateEnum,
+    state: PaymentStateEnum,
 
     @Column(name = "amount")
     val amount: BigDecimal,
@@ -39,7 +38,7 @@ class Payment(
     val id: UUID = UUID.randomUUID()
 
 
-) : DateDeleteColumnEntity() {
+) : DateColumnEntity() {
 
     constructor(
         orderCode: String,
@@ -56,9 +55,23 @@ class Payment(
         paymentDate = Date()
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state", columnDefinition = "enum", nullable = false)
+    var state: PaymentStateEnum = state
+        protected set
+
     @Column(name = "payment_date")
-    final var paymentDate: Date? = null
-        private set
+    var paymentDate: Date? = null
+        protected set
+
+
+    fun done() {
+        this.state = PaymentStateEnum.DONE
+    }
+
+    fun error() {
+        this.state = PaymentStateEnum.ERROR
+    }
 
 
 }

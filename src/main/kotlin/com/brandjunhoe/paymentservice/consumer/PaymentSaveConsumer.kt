@@ -30,3 +30,5 @@ class PaymentSaveConsumer(
     }
 
 }
+
+// {"orderCode" : "orderCode", "type" : "PAYMENT", "method" : "CARD", "amount" : 10000}
